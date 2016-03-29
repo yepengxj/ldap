@@ -5,7 +5,7 @@
 # see https://github.com/docker/docker/issues/8231
 ulimit -n 1024
 
-OPENLDAP_ROOT_PASSWORD=${OPENLDAP_ROOT_PASSWORD:-admin}
+OPENLDAP_ROOT_PASSWORD=${OPENLDAP_ROOT_PASSWORD:-password}
 OPENLDAP_ROOT_DN_RREFIX=${OPENLDAP_ROOT_DN_RREFIX:-'cn=Manager'}
 OPENLDAP_ROOT_DN_SUFFIX=${OPENLDAP_ROOT_DN_SUFFIX:-'dc=example,dc=com'}
 OPENLDAP_DEBUG_LEVEL=${OPENLDAP_DEBUG_LEVEL:-256}
@@ -43,10 +43,9 @@ if [ ! -f /etc/openldap/CONFIGURED ]; then
         # Update configuration with root password, root DN, and root suffix
 
         # add test schema
-        ldapadd -Y EXTERNAL -H ldapi:/// -f /usr/local/etc/openldap/back.ldif -d $OPENLDAP_DEBUG_LEVEL
-        ldapadd -Y EXTERNAL -H ldapi:/// -f /usr/local/etc/openldap/sssvlv_load.ldif -d $OPENLDAP_DEBUG_LEVEL
-        ldapadd -Y EXTERNAL -H ldapi:/// -f /usr/local/etc/openldap/sssvlv_config.ldif -d $OPENLDAP_DEBUG_LEVEL
-        ldapadd -Y EXTERNAL -H ldapi:/// -f /usr/local/etc/openldap/sssvlv_config.ldif -d $OPENLDAP_DEBUG_LEVEL
+        ldapadd -Y EXTERNAL -H ldapi:/// -f /usr/local/etc/openldap/back.ldif
+        ldapadd -Y EXTERNAL -H ldapi:/// -f /usr/local/etc/openldap/sssvlv_load.ldif
+        ldapadd -Y EXTERNAL -H ldapi:/// -f /usr/local/etc/openldap/sssvlv_config.ldi
         ldapadd -x -D cn=admin,dc=openstack,dc=org -w password -c -f /usr/local/etc/openldap/front.ldif
 
         # stop the daemon
